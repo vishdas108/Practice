@@ -1,0 +1,584 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "Additional AddOns Multi-Channel",
+    "description": "This is Swagger specification for the Additional AddOns Multi-Channel",
+    "version": "$Revision: 1.6 $"
+  },
+  "servers": [
+    {
+      "url": "https://urldefense.com/v3/__http://dubdevxsves33.csgidev.com:50120/trerest_in/api/v1__;!!GszH2LQudD4GjA!noJ6zk6RluG-uWH_HCMfBltvlgT3W78sbCidDQ1NlGdTrgJtEdI0x4OG_VVxt0-u0PzYw9THZUWfijDFpFW9MhzHm9ytRzM$ "
+    }
+  ],
+  "tags": [
+    {
+      "name": "additionalAddOnsMultiChannel"
+    }
+  ],
+  "paths": {
+    "/additionalAddOnsMultiChannel/{MSISDN}": {
+      "get": {
+        "tags": [
+          "additionalAddOnsMultiChannel"
+        ],
+        "summary": "Retrieves a Available/Purchased Addons by MSISDN ID",
+        "description": "This operation retrieves a Available/Purchased Addons for Purchase",
+        "operationId": "retrieveAvailableAddOns",
+        "parameters": [
+          {
+            "name": "MSISDN",
+            "in": "path",
+            "description": "Identifier of the MSISDN",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "category",
+            "in": "query",
+            "description": "retrieves the list of product offerings, based on CTG tags ",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "effectiveDate",
+            "in": "query",
+            "description": "retrieves the list of product offerings, based on effectiveDate ",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json;charset=utf-8": {
+                "schema": {
+                  "$ref": "#/components/schemas/data"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json;charset=utf-8": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json;charset=utf-8": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/json;charset=utf-8": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json;charset=utf-8": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "405": {
+            "description": "Method Not allowed",
+            "content": {
+              "application/json;charset=utf-8": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Conflict",
+            "content": {
+              "application/json;charset=utf-8": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json;charset=utf-8": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "category": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "Tag name"
+          },
+          "id": {
+            "type": "number",
+            "description": "TAG ID"
+          },
+          "codeLabel": {
+            "type": "string",
+            "description": "Code Label"
+          },
+          "href": {
+            "type": "string",
+            "description": "http link"
+          }
+        },
+        "description": ""
+      },
+      "productRelValue":{
+        "type": "object",
+        "properties": {
+          "relationshipType": {
+            "type": "string",
+            "description": "Relationship with parent/child offer"
+          },
+          "purchasedBundles": {
+            "type": "array",
+            "description": "List of Already Purchased bundles",
+            "items": {
+              "$ref": "#/components/schemas/purchasedBundle"
+            }
+          },
+          "availableBundles": {
+            "type": "array",
+            "description": "List of all available bundles",
+            "items": {
+              "$ref": "#/components/schemas/availableBundle"
+            }
+          }
+        },
+        "description": ""
+      },
+      "productRelationship": {
+        "type": "object",
+        "properties": {
+          "relationshipType": {
+            "type": "string",
+            "description": "Relationship with parent/child offer"
+          },
+          "product": {
+		  "type" : "object",
+		  "description" : "",
+              "$ref": "#/components/schemas/productObject"
+            
+            
+          }
+        },
+        "description": ""
+      },
+      "productOffering": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "OfferName"
+          },
+          "id": {
+            "type": "number",
+            "description": "Offer Id"
+          },
+          "offerType": {
+            "type": "string",
+            "description": "offerType"
+          },
+          "isBundle": {
+            "type": "string",
+            "description": "is Bundle Flag, True/False"
+          },
+          "technicalProductId": {
+            "type": "string",
+            "description": "technical product id from legacy system"
+          },
+          "technicalName": {
+            "type": "string",
+            "description": "technical product name from legacy system"
+          },
+          "category": {
+            "type": "array",
+            "description": "TAG related details",
+            "items": {
+              "$ref": "#/components/schemas/category"
+            }
+          },
+          "MIN": {
+            "type": "number",
+            "description": "Parent level MIN"
+          },
+          "MAX": {
+            "type": "number",
+            "description": "Parent level MAX"
+          }
+        },
+        "description": "contains id,name,offertype etc..."
+      },
+      "productObject": {
+        "type": "object",
+        "properties": {
+          "productOffering": {
+            "$ref": "#/components/schemas/productOffering"
+          },
+          "productRelationship": {
+            "type": "array",
+            "description": "Contains details related to nextlevel",
+            "items": {
+                  "$ref": "#/components/schemas/productRelationship"
+            }
+          },
+          "productStore": {
+		      "type" : "object",
+          "$ref": '#/components/schemas/productRelValue'
+          }
+        },
+        "description": ""
+      },
+      "productOfferingPriceCharacteristic": {
+        "type": "object",
+        "properties": {
+          "NAME": {
+            "type": "string",
+            "description": "Name of Characteristic"
+          },
+          "VALUE_TYPE": {
+            "type": "string",
+            "description": "Value"
+          },
+          "productOfferingPriceCharacteristicValue": {
+            "type": "array",
+            "description": "Characteristic Value",
+            "items": {
+              "$ref": "#/components/schemas/productOfferingPriceCharacteristicValue"
+            }
+          }
+        },
+        "description": "Add to Cart Characteristic"
+      },
+      "productOfferingPriceCharacteristicValue": {
+        "type": "object",
+        "properties": {
+          "VALUE": {
+            "type": "string",
+            "description": "Value"
+          },
+          "VALUE_TYPE": {
+            "type": "string",
+            "description": "Value"
+          }
+        },
+        "description": "Price details, taxRate,VAT,VATinclusive,unit,value"
+      },
+      "price": {
+        "type": "object",
+        "properties": {
+          "taxRate": {
+            "type": "number",
+            "description": "tax rate in percentage",
+            "format": "float"
+          },
+          "VatApplicable": {
+            "type": "string",
+            "description": "Flag for VAT Applicable"
+          },
+          "unit": {
+            "type": "string",
+            "description": "Currency"
+          },
+          "VATInclusive": {
+            "type": "number",
+            "description": "VAT inclusive amount",
+            "format": "float"
+          },
+          "VATAmount": {
+            "type": "number",
+            "description": "VAT tax amount",
+            "format": "float"
+          },
+          "value": {
+            "type": "number",
+            "description": "Amount without Tax",
+            "format": "float"
+          }
+        },
+        "description": "Price details, taxRate,VAT,VATinclusive,unit,value"
+      },
+      "Money": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "pricing name"
+          },
+          "priceType": {
+            "type": "string",
+            "description": "Activation/Cancellation/Recurring"
+          },
+          "price": {
+            "type": "object",
+            "$ref": "#/components/schemas/price"
+            
+          },
+          "productOfferingPriceCharacteristic": {
+            "type": "array",
+            "description": "will hold Price Details",
+            "items": {
+              "$ref": "#/components/schemas/productOfferingPriceCharacteristic"
+            }
+          },
+          "description": {
+            "type": "string",
+            "description": "Price Type, NRC/MRC"
+          }
+        },
+        "description": "A base / value business entity used to represent money"
+      },
+      "validFor": {
+        "type": "object",
+        "properties": {
+          "startDateTime": {
+            "type": "string",
+            "description": "product start date"
+          },
+          "endDateTime": {
+            "type": "string",
+            "description": "product end date"
+          }
+        },
+        "description": ""
+      },
+      "purchasedBundle": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "<PRODUCT_OFFER_NODE_ID>-< PRODUCT_OFFER_INSTANCE_ID>-<BASE_PRODUCT_INSTANCE_ID>/<PRODUCT_OFFER_NODE_ID>--<BASE_PRODUCT_INSTANCE_ID> from table product_instance_history"
+          },
+          "offerType": {
+            "type": "string",
+            "description": "Offer Type"
+          },
+          "isBundle": {
+            "type": "string",
+            "description": "is Bundle Flag, True/False"
+          },
+          "serialNumber": {
+            "type": "string",
+            "description": "the ICCID for multiSIM offer, and IMEI for External Device offer."
+          },
+          "offerName": {
+            "type": "string",
+            "description": "Offer Name"
+          },
+          "technicalName": {
+            "type": "string",
+            "description": "Technical Name from legacy system"
+          },
+          "technicalProductId": {
+            "type": "number",
+            "description": "Technical Id from Legacy system"
+          },
+          "MIN": {
+            "type": "number",
+            "description": "Bundle level MIN"
+          },
+          "MAX": {
+            "type": "number",
+            "description": "BUNDLE level MAX"
+          },
+          "category": {
+            "type": "array",
+            "description": "TAG related details",
+            "items": {
+              "$ref": "#/components/schemas/category"
+            }
+          },
+          "validFor": {
+            "type": "object",
+            "$ref": "#/components/schemas/validFor"
+          },
+          "priceDetails": {
+            "type": "array",
+            "description": "Price related Information",
+            "items": {
+              "$ref": "#/components/schemas/Money"
+            }
+          }
+        },
+        "description": ""
+      },
+      "availableBundle": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "number",
+            "description": "Product Offer id"
+          },
+          "offerType": {
+            "type": "string",
+            "description": "Product offer type"
+          },
+          "offerName": {
+            "type": "string",
+            "description": "Offer Name"
+          },
+          "isBundle": {
+            "type": "string",
+            "description": "is Bundle Flag, True/False"
+          },
+          "technicalName": {
+            "type": "string",
+            "description": "Technical Name from legacy system"
+          },
+          "technicalProductId": {
+            "type": "number",
+            "description": "Technical product id from Legacy system"
+          },
+          "MIN": {
+            "type": "number",
+            "description": "Bundle level MIN"
+          },
+          "MAX": {
+            "type": "number",
+            "description": "Bundle level MAX"
+          },
+          "SKU": {
+            "type": "string",
+            "description": "SKU"
+          },
+          "priceDetails": {
+            "type": "array",
+            "description": "Price Related details",
+            "items": {
+              "$ref": "#/components/schemas/Money"
+            }
+          },
+          "category": {
+            "type": "array",
+            "description": "TAG related details",
+            "items": {
+              "$ref": "#/components/schemas/category"
+            }
+          }
+        },
+        "description": ""
+      },
+      "dataObject": {
+        "type": "object",
+        "properties": {
+          "relationshipType": {
+            "type": "string",
+            "description": "Parent bundle name"
+          },
+          "product": {
+		      "type" : "object",
+            "$ref": "#/components/schemas/productObject"
+          }
+        },
+        "description": ""
+      },
+      "data": {
+        "type": "object",
+        "properties": {
+          "data": {
+            "type": "array",
+            "description": "",
+            "items": {
+              "$ref": "#/components/schemas/responseObject"
+            }
+          }
+        },
+        "description": ""
+      },
+      "responseObject": {
+        "type": "object",
+        "properties": {
+          "productOrderItem": {
+            "type": "array",
+            "description": "",
+            "items": {
+              "$ref": "#/components/schemas/dataObject"
+            }
+          }
+        },
+        "description": "Contains Array of Available/Purchased Addons."
+      },
+      "Error": {
+        "required": [
+          "code",
+          "reason"
+        ],
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "string",
+            "description": "Application relevant detail, defined in the API or a common list."
+          },
+          "reason": {
+            "type": "string",
+            "description": "Explanation of the reason for the error which can be shown to a client user."
+          },
+          "message": {
+            "type": "string",
+            "description": "More details and corrective actions related to the error which can be shown to a client user."
+          },
+          "status": {
+            "type": "string",
+            "description": "HTTP Error code extension"
+          },
+          "referenceError": {
+            "type": "string",
+            "description": "URI of documentation describing the error.",
+            "format": "uri"
+          },
+          "@baseType": {
+            "type": "string",
+            "description": "When sub-classing, this defines the super-class."
+          },
+          "@schemaLocation": {
+            "type": "string",
+            "description": "A URI to a JSON-Schema file that defines additional attributes and relationships",
+            "format": "uri"
+          },
+          "@type": {
+            "type": "string",
+            "description": "When sub-classing, this defines the sub-class entity name."
+          }
+        },
+        "description": "Used when an API throws an Error, typically with a HTTP error response-code (3xx, 4xx, 5xx)"
+      }
+    }
+  }
+}
